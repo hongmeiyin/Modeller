@@ -1,0 +1,682 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<link href="Tutorial_files/modeller.css" rel="stylesheet" type="text/css">
+<link rel="canonical" href="https://salilab.org/modeller/tutorial/basic.html">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript" src="Tutorial_files/modeller.js"></script>
+<script type="text/javascript" src="Tutorial_files/escramble-new.js"></script>
+<title>Tutorial</title>
+</head>
+
+<body>
+
+<!-- Auto-generated file: do not edit (any changes will be lost) -->
+
+<div class="rightlink">
+<a class="salilab" title="To main Sali lab pages" href="https://salilab.org/">
+<img src="Tutorial_files/salilab.png" alt="To main Sali lab pages"></a>
+
+<a class="mobilemenu" title="Mobile menu" href="#" onclick="show_menu(); return false;">
+<img src="Tutorial_files/mobilemenu.png" alt="Mobile menu"></a></div>
+
+<div class="modheader">
+</div>
+
+<div class="blayout">
+<div class="lbar">
+<ul class="menu">
+<li class="menu"><a href="https://salilab.org/modeller/">About MODELLER</a></li>
+<li class="menu"><a href="https://salilab.org/modeller/news.html">MODELLER News</a></li>
+<li class="menu"><a href="https://salilab.org/modeller/download_installation.html">Download &amp; Installation</a></li>
+<li class="submenu"><a href="https://salilab.org/modeller/release.html">Release Notes</a></li>
+<li class="submenu"><a href="https://salilab.org/modeller/supplemental.html">Data file downloads</a></li>
+<li class="menu"><a href="https://salilab.org/modeller/registration.html">Registration</a></li>
+<li class="submenu"><a href="https://salilab.org/modeller/nonacademic.html">Non-academic use</a></li>
+<li class="menu"><a href="https://salilab.org/modeller/discussion_forum.html">Discussion Forum</a></li>
+<li class="submenu"><a href="https://salilab.org/mm/postorius/lists/modeller_usage.salilab.org/">Subscribe</a></li>
+<li class="submenu"><a href="https://salilab.org/mm/hyperkitty/list/modeller_usage@salilab.org/latest">Archives</a></li>
+<li class="menu"><a class="this" href="https://salilab.org/modeller/documentation.html">Documentation</a></li>
+<li class="submenu"><a href="https://salilab.org/modeller/FAQ.html">FAQ</a></li>
+<li class="submenu"><a href="https://salilab.org/modeller/tutorial/">Tutorial</a></li>
+<li class="submenu"><a href="https://salilab.org/modeller/manual/">Online manual</a></li>
+<li class="submenu"><a href="https://salilab.org/modeller/wiki/">Wiki</a></li>
+<li class="menu"><a href="https://salilab.org/modeller/developers_pages1.html">Developers' Pages</a></li>
+<li class="menu"><a href="https://salilab.org/modeller/contact.html">Contact Us</a></li>
+</ul>
+
+</div>
+<div class="main">
+
+<h1>Tutorial</h1>
+<hr>
+
+<h2>Basic example:<br>
+Modeling lactate dehydrogenase from <em>Trichomonas vaginalis</em> based on a
+single template.(基于单一模板对阴道毛滴虫乳酸脱氢酶进行建模)</h2>
+
+<p><i>All input and output files for this example are available to download,
+in either <a href="https://salilab.org/modeller/tutorial/basic-example.zip">zip format (for Windows)</a> or
+<a href="https://salilab.org/modeller/tutorial/basic-example.tar.gz">.tar.gz format (for Unix/Linux)</a>.</i></p>
+
+<p>A novel gene for lactate dehydrogenase was identified from the genomic
+sequence of <em>Trichomonas vaginalis</em> (TvLDH)(从阴道毛滴虫（Trichomonas vaginalis）的基因组序列中鉴定出一个新的乳酸脱氢酶基因（TvLDH）). The corresponding protein
+had a higher similarity to the malate dehydrogenase of the same species (TvMDH)
+than to any other LDH(该对应蛋白与同一物种的苹果酸脱氢酶（TvMDH）的相似性高于与任何其他乳酸脱氢酶（LDH）的相似性). We hypothesized that TvLDH arose from TvMDH by
+convergent(收敛的) evolution relatively recently(我们假设TvLDH是通过趋同进化最近从TvMDH演化而来的). Comparative models were constructed
+for TvLDH and TvMDH to study the sequences in the structural context and to
+suggest site-directed mutagenesis experiments for elucidating specificity
+changes in this apparent case of convergent evolution of enzymatic specificity.
+(本研究构建了TvLDH和TvMDH的比较模型，旨在从结构角度分析序列特征，并为阐明这一酶特异性趋同进化现象中的特异性变化提出定点突变实验方案。)
+The native and mutated enzymes were expressed and their activities were
+compared.</p>
+
+<p>The individual modeling steps of this example are explained below. Note
+that we go through every step in this tutorial to build a model knowing only
+the amino acid sequence(请注意，在本教程中，我们将逐步演示如何仅凭氨基酸序列构建模型). In practice you may already know the related
+structures, and may even have an alignment from another program, so you can
+skip one or more steps.(在实际操作中，您可能已经了解相关的结构，甚至可能已经从其他程序中获得了对齐结果，因此您可以跳过一个或多个步骤。) Alternatively, for very simple applications you
+may be able to use the <a href="https://salilab.org/modweb">ModWeb web server</a> rather than
+Modeller itself.</p>
+
+<h3>1. Searching for structures related to TvLDH(搜索与TvLDH相关的结构)</h3>
+<p>First, it is necessary to put the target TvLDH sequence into the PIR format
+readable by <span class="progs">MODELLER</span> (file
+"<span class="filename">TvLDH.ali</span>").</p>
+
+<pre class="filecontent">&gt;P1;TvLDH
+sequence:TvLDH:::::::0.00: 0.00
+MSEAAHVLITGAAGQIGYILSHWIASGELYGDRQVYLHLLDIPPAMNRLTALTMELEDCAFPHLAGFVATTDPKA
+AFKDIDCAFLVASMPLKPGQVRADLISSNSVIFKNTGEYLSKWAKPSVKVLVIGNPDNTNCEIAMLHAKNLKPEN
+FSSLSMLDQNRAYYEVASKLGVDVKDVHDIIVWGNHGESMVADLTQATFTKEGKTQKVVDVLDHDYVFDTFFKKI
+GHRAWDILEHRGFTSAASPTKAAIQHMKAWLFGTAPGEVLSMGIPVPEGNPYGIKPGVVFSFPCNVDKEGKIHVV
+EGFKVNDWLREKLDFTEKDLFHEKEIALNHLAQGG*
+</pre>
+<p class="smallfilename">File: TvLDH.ali</p>
+
+<p>The first line contains the sequence code, in the format
+"<em>&gt;P1;code</em>". The second line with ten fields separated by colons
+generally contains information about the structure file, if applicable.(第二行包含十个以冒号分隔的字段，通常包含关于结构文件的信息（如适用）) Only
+two of these fields are used for sequences, "<em>sequence</em>" (indicating
+that the file contains a sequence without known structure) and "<em>TvLDH</em>"
+(the model file name). The rest of the file contains the sequence of TvLDH,
+with "*" marking its end. The standard one-letter amino acid codes are used.
+(Note that they must be upper case; some lower case letters are used for
+non-standard residues.(使用标准的一字母氨基酸代码。（注意：这些代码必须使用大写字母；部分小写字母用于表示非标准残基。）) See the file <tt>modlib/restyp.lib</tt> in the
+Modeller distribution for more information.)</p>
+
+<p>A search for potentially related sequences of known
+structure can be performed by the <strong>Profile.build()</strong> command of
+<span class="progs">MODELLER</span>.(可以通过MODELLER的Profile.build()命令搜索具有已知结构的潜在相关序列) The following script, taken line by line,
+does the following (see file "<span class="filename">build_profile.py</span>"):</p>
+
+<ol>
+<li>Initializes the 'environment' for this modeling run, by creating a new
+'Environ' object. Almost all MODELLER scripts require this step, as the new
+object (which we call here 'env', but you can call it anything you like) is
+needed to build most other useful objects.</li>
+(初始化本次建模运行的“环境”，通过创建一个新的“Environ”对象。几乎所有MODELLER脚本都需要执行此步骤，因为该新对象（在此我们称其为“env”，但您可以随意命名）是构建其他大多数有用对象的必要条件。)
+
+<li>Creates a new 'SequenceDB' object, calling it 'sdb'. 'SequenceDB'
+objects are used to contain large databases of protein sequences.</li>
+(创建一个新的 ‘SequenceDB’ 对象，并将其命名为 ‘sdb’。'SequenceDB'
+对象用于存储大量蛋白质序列数据库。)
+
+<li>Reads a text format file containing non-redundant PDB sequences at 95%
+sequence identity into the <tt>sdb</tt> database. The sequences can be found
+in the file "<span class="filename">pdb_95.pir</span>" (which can be downloaded
+using the link at the top of this page). Like the
+previously-created alignment, this file is in PIR format. Sequences which
+have fewer than 30 or more than 4000 residues are discarded, and non-standard
+residues are removed.</li>
+
+<li>Writes a binary machine-specific file containing all sequences read in the
+previous step.</li>
+
+<li>Reads the binary format file back in. Note that if you plan to use the
+same database several times, you should use the previous two steps only the
+first time, to produce the binary database. On subsequent runs, you can omit
+those two steps and use the binary file directly, since reading the binary
+file is a lot faster than reading the PIR file.</li>
+
+<li>Creates a new 'Alignment' object, calling it 'aln', reads our query
+sequence "<em>TvLDH</em>" from the file
+"<span class="filename">TvLDH.ali</span>", and converts it to a profile
+'prf'. Profiles contain similar information to alignments, but are more
+compact and better for sequence database searching.</li>
+
+<li>Searches the sequence database 'sdb' for our query profile 'prf'.
+Matches from the sequence database are added to the profile.</li>
+
+<li>Writes a profile of the query sequence and its homologs (see file 
+"<span class="filename">build_profile.prf</span>"). The equivalent information
+is also written out in standard alignment format.</li>
+</ol>
+
+<pre class="filecontent">from modeller import *
+
+log.verbose()
+env = Environ()
+
+#-- Prepare the input files
+
+#-- Read in the sequence database
+sdb = SequenceDB(env)
+sdb.read(seq_database_file='pdb_95.pir', seq_database_format='PIR',
+         chains_list='ALL', minmax_db_seq_len=(30, 4000), clean_sequences=True)
+
+#-- Write the sequence database in binary form
+sdb.write(seq_database_file='pdb_95.bin', seq_database_format='BINARY',
+          chains_list='ALL')
+
+#-- Now, read in the binary database
+sdb.read(seq_database_file='pdb_95.bin', seq_database_format='BINARY',
+         chains_list='ALL')
+
+#-- Read in the target sequence/alignment
+aln = Alignment(env)
+aln.append(file='TvLDH.ali', alignment_format='PIR', align_codes='ALL')
+
+#-- Convert the input sequence/alignment into
+#   profile format
+prf = aln.to_profile()
+
+#-- Scan sequence database to pick up homologous sequences
+prf.build(sdb, matrix_offset=-450, rr_file='${LIB}/blosum62.sim.mat',
+          gap_penalties_1d=(-500, -50), n_prof_iterations=1,
+          check_profile=False, max_aln_evalue=0.01)
+
+#-- Write out the profile in text format
+prf.write(file='build_profile.prf', profile_format='TEXT')
+
+#-- Convert the profile back to alignment format
+aln = prf.to_alignment()
+
+#-- Write out the alignment file
+aln.write(file='build_profile.ali', alignment_format='PIR')
+
+</pre>
+<p class="smallfilename">File: build_profile.py</p>
+
+<p>This is a regular Python script, and so can be run with a command
+similar to the following at your command line:</p>
+
+<p><tt>python3 build_profile.py &gt; build_profile.log</tt></p>
+
+<p><i>Note that on some systems the Python interpreter is called
+<tt>python2</tt> or <tt>python</tt> rather than <tt>python3</tt>.
+The full path to the Python interpreter may also be necessary, such as
+<tt>/usr/bin/python</tt> on a Linux or Mac machine
+or <tt>C:\python27\python.exe</tt> on a Windows system. If Python is not
+installed on your machine, Modeller also includes a basic Python 2.3
+interpeter as <tt>mod&lt;version&gt;</tt>. For example, to run this script
+using Modeller 10.0's own interpreter, use <tt>mod10.0 build_profile.py</tt>.
+Note that <tt>mod10.0</tt> automatically creates a <tt>build_profile.log</tt>
+logfile.</i></p>
+
+<p>(You can get a command line using xterm or GNOME Terminal in Linux,
+Terminal in Mac OS X, or the 'Modeller' link from your Start Menu in Windows.
+For more information on running Modeller, see
+<a href="https://salilab.org/modeller/release.html">the release notes</a>. For more information
+on using Python, see the <a href="http://www.python.org/">Python web site</a>.
+Note that you can use other Python modules within your Modeller scripts, if
+Python is correctly installed on your system.)</p>
+
+<p>The <strong>Profile.build()</strong> command has many options. In this
+example <strong>rr_file</strong> is set to use the BLOSUM62 similarity matrix
+(file "<span class="filename">blosum62.sim.mat</span>" provided in the
+<span class="progs">MODELLER</span> distribution). Accordingly, the parameters
+<strong>matrix_offset</strong> and <strong>gap_penalties_1d</strong> are set to
+the appropriate values for the BLOSUM62 matrix. For this example, we will run
+only one search iteration by setting the parameter
+<strong>n_prof_iterations</strong> equal to 1. Thus, there is no need
+for checking the profile for deviation (<strong>check_profile</strong> set to
+False). Finally, the parameter <strong>max_aln_evalue</strong> is set to 0.01,
+indicating that only sequences with e-values smaller than or equal to 0.01 will
+be included in the final profile.</p> 
+
+<h3>2. Selecting a template</h3>
+<p>The output of the "<span class="filename">build_profile.py</span>" script is
+written to the "<span class="filename">build_profile.log</span>" file.
+<span class="progs">MODELLER</span> always produces a log file. Errors and
+warnings in log files can be found by searching for the "<em>_E&gt;</em>" and
+"<em>_W&gt;</em>" strings, respectively.
+<span class="progs">MODELLER</span> also writes the profile in text format to
+the "<span class="filename">build_profile.prf</span>" file. An extract (omitting the aligned sequences)
+ of the output file can be seen next. The first 6 commented lines indicate the input parameters used in
+<span class="progs">MODELLER</span> to build the profile. Subsequent lines correspond to the detected
+similarities by <strong>Profile.build()</strong>.</p>
+
+<pre class="filecontent"># Number of sequences:     30
+# Length of profile  :    335
+# N_PROF_ITERATIONS  :      1
+# GAP_PENALTIES_1D   :   -900.0   -50.0
+# MATRIX_OFFSET      :    0.0
+# RR_FILE            : ${MODINSTALL8v1}/modlib//as1.sim.mat
+    1 TvLDH                                    S     0   335     1   335     0     0     0    0.    0.0
+    2 1a5z                                     X     1   312    75   242    63   229   164   28.   0.83E-08
+    3 1b8pA                                    X     1   327     7   331     6   325   316   42.    0.0
+    4 1bdmA                                    X     1   318     1   325     1   310   309   45.    0.0
+    5 1t2dA                                    X     1   315     5   256     4   250   238   25.   0.66E-04
+    6 1civA                                    X     1   374     6   334    33   358   325   35.    0.0
+    7 2cmd                                     X     1   312     7   320     3   303   289   27.   0.16E-05
+    8 1o6zA                                    X     1   303     7   320     3   287   278   26.   0.27E-05
+    9 1ur5A                                    X     1   299    13   191     9   171   158   31.   0.25E-02
+   10 1guzA                                    X     1   305    13   301     8   280   265   25.   0.28E-08
+   11 1gv0A                                    X     1   301    13   323     8   289   274   26.   0.28E-04
+   12 1hyeA                                    X     1   307     7   191     3   183   173   29.   0.14E-07
+   13 1i0zA                                    X     1   332    85   300    94   304   207   25.   0.66E-05
+   14 1i10A                                    X     1   331    85   295    93   298   196   26.   0.86E-05
+   15 1ldnA                                    X     1   316    78   298    73   301   214   26.   0.19E-03
+   16 6ldh                                     X     1   329    47   301    56   302   244   23.   0.17E-02
+   17 2ldx                                     X     1   331    66   306    67   306   227   26.   0.25E-04
+   18 5ldh                                     X     1   333    85   300    94   304   207   26.   0.30E-05
+   19 9ldtA                                    X     1   331    85   301    93   304   207   26.   0.10E-05
+   20 1llc                                     X     1   321    64   239    53   234   164   26.   0.20E-03
+   21 1lldA                                    X     1   313    13   242     9   233   216   31.   0.31E-07
+   22 5mdhA                                    X     1   333     2   332     1   331   328   44.    0.0
+   23 7mdhA                                    X     1   351     6   334    14   339   325   34.    0.0
+   24 1mldA                                    X     1   313     5   198     1   189   183   26.   0.13E-05
+   25 1oc4A                                    X     1   315     5   191     4   186   174   28.   0.18E-04
+   26 1ojuA                                    X     1   294    78   320    68   285   218   28.   0.43E-05
+   27 1pzgA                                    X     1   327    74   191    71   190   114   30.   0.16E-06
+   28 1smkA                                    X     1   313     7   202     4   198   188   34.    0.0
+   29 1sovA                                    X     1   316    81   256    76   248   160   27.   0.93E-03
+   30 1y6jA                                    X     1   289    77   191    58   167   109   33.   0.32E-05 
+</pre>
+
+<p class="smallfilename">File: build_profile.prf</p>
+
+<p>The most important columns in the <strong>Profile.build()</strong> output
+are the second, tenth, eleventh and twelfth columns. The second column reports 
+the code of the PDB sequence that was compared with the target sequence. 
+The PDB code in each line is the representative of a group of PDB sequences 
+that share 95% or more sequence identity to each other and have less than 30 
+residues or 30% sequence length difference. The eleventh column reports the 
+percentage sequence identities between TvLDH and a PDB sequence normalized by 
+the lengths of the alignment (indicated in the tenth column). In general, 
+a sequence identity value above approximately 25% indicates a potential
+template unless the alignment is short (i.e., less than 100 residues). A
+better measure of the significance of the alignment is given in the twelfth
+column by the e-value of the alignment. In this example, six PDB sequences
+show very significant similarities to the query sequence with e-values equal
+to 0. As expected, all the hits correspond to malate dehydrogenases
+(<span class="pdb">1bdm:A</span>,
+<span class="pdb">5mdh:A</span>, <span class="pdb">1b8p:A</span>, 
+<span class="pdb">1civ:A</span>, <span class="pdb">7mdh:A</span>, and 
+<span class="pdb">1smk:A</span>).  To select the most appropriate template for
+our query sequence over the six similar structures, we will use the 
+<strong>Alignment.compare_structures()</strong> command to assess the structural
+and sequence similarity between the possible templates (file
+"<span class="filename">compare.py</span>").
+
+</p><pre class="filecontent">from modeller import *
+
+env = Environ()
+aln = Alignment(env)
+for (pdb, chain) in (('1b8p', 'A'), ('1bdm', 'A'), ('1civ', 'A'),
+                     ('5mdh', 'A'), ('7mdh', 'A'), ('1smk', 'A')):
+    m = Model(env, file=pdb, model_segment=('FIRST:'+chain, 'LAST:'+chain))
+    aln.append_model(m, atom_files=pdb, align_codes=pdb+chain)
+aln.malign()
+aln.malign3d()
+aln.compare_structures()
+aln.id_table(matrix_file='family.mat')
+env.dendrogram(matrix_file='family.mat', cluster_cut=-1.0)
+</pre>
+<p class="smallfilename">File: compare.py</p>
+
+<p>In this case, we create an (initially empty) alignment object 'aln' and then
+use a Python 'for' loop to instruct MODELLER to read each of the PDB files.
+(Note that in order for this to work, you must have all of the PDB files in
+the same directory as this script, either downloaded from the PDB website or
+from the archive linked at the top of this page.) We use the
+<strong>model_segment</strong> argument to ask only for a single chain to be
+read from each PDB file (by default, all chains are read from the file). As
+each structure is read in, we use the <strong>append_model</strong> method to
+add the structure to the alignment.</p>
+
+<p>At the end of the loop, all of the structures are in the alignment, but they
+are not ideally aligned to each other (<strong>append_model</strong> creates
+a simple 1:1 alignment with no gaps). Therefore, we improve this alignment by
+using <strong>malign</strong> to calculate a multiple sequence alignment.
+The <strong>malign3d</strong> command then performs an iterative least-squares
+superposition of the six 3D structures, using the multiple sequence alignment
+as its starting point. The
+<strong>compare_structures</strong> command compares the structures according
+to the alignment constructed by <strong>malign3d</strong>. It does not make an
+alignment, but it calculates the RMS and DRMS deviations between atomic
+positions and distances, differences between the mainchain and sidechain
+dihedral angles, percentage sequence identities, and several other measures.
+Finally, the <strong>id_table</strong> command writes a file with pairwise
+sequence distances that can be used directly as the input to the
+<strong>dendrogram</strong> command (or the clustering programs in the
+<span class="progs">PHYLIP</span> package). <strong>dendrogram</strong>
+calculates a clustering tree from the input matrix of pairwise distances,
+which helps visualizing differences among the template candidates. Excerpts
+from the log file are shown below (file
+"<span class="filename">compare.log</span>").</p>
+
+<pre class="filecontent">Sequence identity comparison (ID_TABLE):
+
+   Diagonal       ... number of residues;
+   Upper triangle ... number of identical residues;
+   Lower triangle ... % sequence identity, id/min(length).
+
+         1b8pA @11bdmA @11civA @25mdhA @27mdhA @21smkA @2
+1b8pA @1      327     194     147     151     153      49
+1bdmA @1       61     318     152     167     155      56
+1civA @2       45      48     374     139     304      53
+5mdhA @2       46      53      42     333     139      57
+7mdhA @2       47      49      87      42     351      48
+1smkA @2       16      18      17      18      15     313
+
+
+Weighted pair-group average clustering based on a distance matrix:
+
+
+                                           .----------------------- 1b8pA @1.9    39.0000
+                                           |
+                                  .-------------------------------- 1bdmA @1.8    50.5000
+                                  |
+                              .------------------------------------ 5mdhA @2.4    55.3750
+                              |
+                              |                                .--- 1civA @2.8    13.0000
+                              |                                |
+        .---------------------------------------------------------- 7mdhA @2.4    83.2500
+        |
+      .------------------------------------------------------------ 1smkA @2.5
+
+      +----+----+----+----+----+----+----+----+----+----+----+----+
+    86.0600   73.4150   60.7700   48.1250   35.4800   22.8350   10.1900
+         79.7375   67.0925   54.4475   41.8025   29.1575   16.5125
+                                                                                                            </pre>
+
+<p class="smallfilename">Excerpts of the file compare.log</p>
+
+<p>The comparison above shows that <span class="pdb">1civ:A</span> and
+<span class="pdb">7mdh:A</span> are almost identical, both sequentially and
+structurally. However, <span class="pdb">7mdh:A</span> has a better
+crystallographic resolution (2.4Å versus 2.8Å), eliminating
+<span class="pdb">1civ:A</span>. A second group of structures
+(<span class="pdb">5mdh:A</span>, <span class="pdb">1bdm:A</span>, and 
+<span class="pdb">1b8p:A</span>) share some similarities. From this group, 
+<span class="pdb">5mdh:A</span> has the poorest resolution leaving for 
+consideration only <span class="pdb">1bdm:A</span> and
+<span class="pdb">1b8p:A</span>. <span class="pdb">1smk:A</span> is the most
+diverse structure of the whole set of possible templates. However, it is the
+one with the lowest sequence identity (34%) to the query sequence. We finally
+pick <span class="pdb">1bdm:A</span> over <span class="pdb">1b8p:A</span> and
+<span class="pdb">7mdh:A</span> because of its better crystallographic R-factor
+(16.9%) and higher overall sequence identity to the query sequence (45%).
+
+</p><h3>3. Aligning TvLDF with the template</h3>
+<p>A good way of aligning the sequence of TvLDH with the structure of
+<span class="pdb">1bdm:A</span> is the <strong>align2d()</strong> command in
+<span class="progs">MODELLER</span>. Although <strong>align2d()</strong> is
+based on a dynamic programming algorithm, it is different from standard
+sequence-sequence alignment methods because it takes into account structural
+information from the template when constructing an alignment. This task is
+achieved through a variable gap penalty function that tends to place gaps in
+solvent exposed and curved regions, outside secondary structure segments, and
+between two positions that are close in space. As a result, the alignment
+errors are reduced by approximately one third relative to those that occur
+with standard sequence alignment techniques. This improvement becomes more
+important as the similarity between the sequences decreases and the number
+of gaps increases. In the current example, the template-target similarity
+is so high that almost any alignment method with reasonable parameters will
+result in the same alignment. The following <span class="progs">MODELLER</span>
+script aligns the TvLDH sequence in file
+"<span class="filename">TvLDH.ali</span>" with the
+<span class="pdb">1bdm:A</span> structure in the PDB file
+"<span class="filename">1bdm.pdb</span>" (file
+"<span class="filename">align2d.py</span>").</p>
+
+<pre class="filecontent">from modeller import *
+
+env = Environ()
+aln = Alignment(env)
+mdl = Model(env, file='1bdm', model_segment=('FIRST:A','LAST:A'))
+aln.append_model(mdl, align_codes='1bdmA', atom_files='1bdm.pdb')
+aln.append(file='TvLDH.ali', align_codes='TvLDH')
+aln.align2d(max_gap_length=50)
+aln.write(file='TvLDH-1bdmA.ali', alignment_format='PIR')
+aln.write(file='TvLDH-1bdmA.pap', alignment_format='PAP')
+</pre>
+<p class="smallfilename">File: align2d.py</p>
+
+<p>In this script, we again create an 'Environ' object to use as input to
+later commands. We create an empty alignment 'aln',
+and then a new protein model 'mdl', into which we read the 
+chain A segment of the <span class="pdb">1bdm</span> PDB structure file. The
+<strong>append_model()</strong> command transfers the PDB sequence of this
+model to the alignment and assigns it the name of "<em>1bdmA</em>"
+(<strong>align_codes</strong>). Then we add the "<em>TvLDH</em>" sequence from
+file "<span class="filename">TvLDH.seq</span>" to the alignment, using the
+<strong>append()</strong> command. The <strong>align2d()</strong> command is then
+executed to align the two sequences. Finally, the alignment is written out in two 
+formats, PIR ("<span class="filename">TvLDH-1bdmA.ali</span>") and PAP
+("<span class="filename">TvLDH-1bdmA.pap</span>"). The PIR format is used by
+<span class="progs">MODELLER</span> in the subsequent model building stage,
+while the PAP alignment format is easier to inspect visually. Due to the high
+target-template similarity, there are only a few gaps in the alignment. In the
+PAP format, all identical positions are marked with a "*" (file
+"<span class="filename">TvLDH-1bdmA.pap</span>").</p>
+
+<pre class="filecontent"> _aln.pos         10        20        30        40        50        60
+1bdmA     MKAPVRVAVTGAAGQIGYSLLFRIAAGEMLGKDQPVILQLLEIPQAMKALEGVVMELEDCAFPLLAGL 
+TvLDH     MSEAAHVLITGAAGQIGYILSHWIASGELYG-DRQVYLHLLDIPPAMNRLTALTMELEDCAFPHLAGF 
+ _consrvd *     *  ********* *   ** **  * *  * * ** ** **  *    ********* ***
+
+ _aln.p   70        80        90       100       110       120       130
+1bdmA     EATDDPDVAFKDADYALLVGAAPRL---------QVNGKIFTEQGRALAEVAKKDVKVLVVGNPANTN 
+TvLDH     VATTDPKAAFKDIDCAFLVASMPLKPGQVRADLISSNSVIFKNTGEYLSKWAKPSVKVLVIGNPDNTN 
+ _consrvd  ** **  **** * * **   *             *  **   *  *   **  ***** *** ***
+
+ _aln.pos  140       150       160       170       180       190       200
+1bdmA     ALIAYKNAPGLNPRNFTAMTRLDHNRAKAQLAKKTGTGVDRIRRMTVWGNHSSIMFPDLFHAEVD--- 
+TvLDH     CEIAMLHAKNLKPENFSSLSMLDQNRAYYEVASKLGVDVKDVHDIIVWGNHGESMVADLTQATFTKEG 
+ _consrvd   **   *  * * **     ** ***    * * *  *       *****   *  **  *
+
+ _aln.pos    210       220       230       240       250       260       270
+1bdmA     -GRPALELVDMEWYEKVFIPTVAQRGAAIIQARGASSAASAANAAIEHIRDWALGTPEGDWVSMAVPS 
+TvLDH     KTQKVVDVLDHDYVFDTFFKKIGHRAWDILEHRGFTSAASPTKAAIQHMKAWLFGTAPGEVLSMGIPV 
+ _consrvd          *       *      *   *   **  ****   *** *   *  **  *   **  *
+
+ _aln.pos      280       290       300       310       320       330
+1bdmA     Q--GEYGIPEGIVYSFPVTAK-DGAYRVVEGLEINEFARKRMEITAQELLDEMEQVKAL--GLI 
+TvLDH     PEGNPYGIKPGVVFSFPCNVDKEGKIHVVEGFKVNDWLREKLDFTEKDLFHEKEIALNHLAQGG 
+ _consrvd      ***  * * ***      *   ****   *   *     *   *  * *
+</pre>
+<p class="smallfilename">File: TvLDH-1bdmA.pap</p>
+
+<h3>4. Model building</h3>
+
+<p>Once a target-template alignment is constructed,
+<span class="progs">MODELLER</span> calculates a 3D model of the target
+completely automatically, using its <strong>AutoModel</strong> class. The
+following script will generate five similar models of TvLDH based on the
+<span class="pdb">1bdm:A</span> template structure and the alignment in file
+"<span class="filename">TvLDH-1bdmA.ali</span>" (file
+"<span class="filename">model-single.py</span>").</p>
+
+<pre class="filecontent">from modeller import *
+from modeller.automodel import *
+#from modeller import soap_protein_od
+
+env = Environ()
+a = AutoModel(env, alnfile='TvLDH-1bdmA.ali',
+              knowns='1bdmA', sequence='TvLDH',
+              assess_methods=(assess.DOPE,
+                              #soap_protein_od.Scorer(),
+                              assess.GA341))
+a.starting_model = 1
+a.ending_model = 5
+a.make()
+</pre>
+<p class="smallfilename">File: model-single.py</p>
+
+<p>The first line loads in the <strong>AutoModel</strong> class and prepares
+it for use. We then create an <strong>AutoModel</strong> object, call it 'a',
+and set parameters to guide the model building procedure.
+<strong>alnfile</strong> names the file that contains the target-template
+alignment in the PIR format. <strong>knowns</strong> defines the known template
+structure(s) in <strong>alnfile</strong>
+("<span class="filename">TvLDH-1bdmA.ali</span>"). <strong>sequence</strong>
+defines the name of the target sequence in <strong>alnfile</strong>.
+<strong>assess_methods</strong> requests one or more assessment scores
+(discussed in more detail in the next section).
+<strong>starting_model</strong> and <strong>ending_model</strong> define the
+number of models that are calculated (their indices will run from 1 to 5).
+The last line in the file calls the <strong>make</strong> method that
+actually calculates the models.</p>
+
+<p>The most important output file is
+"<span class="filename">model-single.log</span>", which reports warnings,
+errors and other useful information including the input restraints used for
+modeling that remain violated in the final model. The last few lines from this
+log file are shown below.</p>
+
+<pre class="filecontent">&gt;&gt; Summary of successfully produced models:
+Filename                          molpdf     DOPE score    GA341 score
+----------------------------------------------------------------------
+TvLDH.B99990001.pdb           1763.56104   -38079.76172        1.00000
+TvLDH.B99990002.pdb           1560.93396   -38515.98047        1.00000
+TvLDH.B99990003.pdb           1712.44104   -37984.30859        1.00000
+TvLDH.B99990004.pdb           1720.70801   -37869.91406        1.00000
+TvLDH.B99990005.pdb           1840.91772   -38052.00781        1.00000
+</pre>
+
+<p class="smallfilename">Excerpts of the file model-single.log</p>
+
+<p>As you can see, the log file gives a summary of all the models built.
+For each model, it lists the file name, which contains the coordinates of the
+model in PDB format. The models can be viewed by any program that reads the
+PDB format, such as Chimera. The log also shows the score(s) of each model,
+which are further discussed below. (Note that the actual numbers may be
+slightly different on your machine - this is nothing to worry about.)</p>
+
+<h3>5. Model evaluation</h3>
+
+<p>If several models are calculated for the same target, the "best" model
+can be selected in several ways. For example, you could pick the model with
+the lowest value of the <span class="progs">MODELLER</span> objective function
+or the <a href="https://salilab.org/modeller/10.0/manual/node261.html">DOPE</a>
+or <a href="https://salilab.org/modeller/10.0/manual/node285.html">SOAP</a>
+assessment scores, or with the highest
+<a href="https://salilab.org/modeller/10.0/manual/node205.html">GA341</a>
+assessment score, which are reported at the end of the log file, above.
+(The objective function, molpdf,
+is always calculated, and is also reported in a REMARK in each generated PDB
+file. The DOPE, SOAP, and GA341 scores, or any other assessment scores, are
+only calculated if you list them in <strong>assess_methods</strong>. To
+calculate the SOAP score, you will first need to download the SOAP-Protein
+potential file from <a href="https://salilab.org/SOAP/">the SOAP website</a>,
+then uncomment the SOAP-related lines in <tt>model-single.py</tt> by removing
+the '<tt>#</tt>' characters.)
+The molpdf, DOPE, and SOAP scores are not 'absolute' measures, in the
+sense that they
+can only be used to rank models calculated from the same alignment. Other
+scores are transferable. For example GA341 scores always range from 0.0
+(worst) to 1.0 (native-like); however GA341 is not as good as DOPE or SOAP at
+distinguishing 'good' models from 'bad' models.</p>
+
+<p>Once a final model is selected, it can be further assessed in many ways.
+Links to programs for model assessment can be found in
+the <em>MODEL EVALUATION</em> section on
+<a href="https://salilab.org/bioinformatics_resources.shtml">this page</a>.</p>
+
+<p>Before any external evaluation of the
+model, one should check the log file from the modeling run for runtime errors
+("<span class="filename">model-single.log</span>") and restraint violations
+(see the <span class="progs">MODELLER</span>
+<a href="https://salilab.org/modeller/manual/">manual</a> for details). The file
+"<span class="filename">evaluate_model.py</span>" evaluates an input model
+with the DOPE potential. (Note that here we arbitrarily picked the second
+generated model - you may want to try other models.)</p>
+
+<pre class="filecontent">from modeller import *
+from modeller.scripts import complete_pdb
+
+log.verbose()    # request verbose output
+env = Environ()
+env.libs.topology.read(file='$(LIB)/top_heav.lib') # read topology
+env.libs.parameters.read(file='$(LIB)/par.lib') # read parameters
+
+# read model file
+mdl = complete_pdb(env, 'TvLDH.B99990002.pdb')
+
+# Assess with DOPE:
+s = Selection(mdl)   # all atom selection
+s.assess_dope(output='ENERGY_PROFILE NO_REPORT', file='TvLDH.profile',
+              normalize_profile=True, smoothing_window=15)
+</pre>
+<p class="smallfilename">File: evaluate_model.py</p>
+
+<p>In this script we use the <strong>complete_pdb</strong> script to read in
+a PDB file and prepare it for energy calculations (this automatically
+allows for the possibility that the PDB file has
+atoms in a non-standard order, or has different subsets of atoms, such as
+all atoms including hydrogens, while <span class="progs">MODELLER</span>
+uses only heavy atoms, or vice versa). We then create a selection of all atoms,
+since most <span class="progs">MODELLER</span> energy functions can operate on
+a subset of model atoms. The DOPE energy is then calculated
+with the <strong>assess_dope</strong> command, and we additionally request an
+energy profile, smoothed over a 15 residue window, and normalized by the
+number of restraints acting on each residue. This profile is written to
+a file "<span class="filename">TvLDH.profile</span>", which can be used as
+input to a graphing program. For example, it could be plotted with
+<span class="progs">GNUPLOT</span> using the command
+'<tt>plot "TvLDH.profile" using 1:42 with lines</tt>'. Alternatively, you
+can use the <span class="filename">plot_profiles.py</span> script included
+in the tutorial zip file to plot profiles with the Python matplotlib
+package.</p>
+
+<p>The GA341 score, as well as external analysis with the
+<span class="progs">PROCHECK</span> program, confirms that
+<span class="filename">TvLDH.B99990001.pdb</span> is a
+reasonable model. However, the plotted DOPE score profile (below) shows regions
+of relatively high energy for the long active site loop between residues 90 and
+100 and the long helices at the C-terminal end of the target sequence. (Note
+that we have superposed the model profile on the template profile - gaps in the
+plot can be seen corresponding to the gaps in the alignment. Remember that
+the scores are not absolute, so we cannot make a direct numerical comparison
+between the two. However, we can get an idea of the quality of our input
+alignment this way by comparing the rough shapes of the two profiles - if one
+is obviously shifted relative to the other, it is likely that the alignment
+is also shifted from the correct one.)</p>
+
+<p class="centerimg">
+<img class="centerimg" src="Tutorial_files/dope_profile.png" alt="DOPE score profile">
+</p>
+
+<p class="smallfilename">DOPE score profiles for the model and templates</p>
+
+<p>This long loop interacts with region 220-250, which forms the other half of 
+the active site. This latter part is well resolved in the template and probably
+correctly modeled in the target structure, but due to the unfavorable
+non-bonded interactions with the 90-100 region, it is also reported to be
+of high "energy" by DOPE. In general, a possible error indicated by DOPE may 
+not necessarily be an actual error, especially if it highlights an active site 
+or a protein-protein interface. However, in this case, the same active site
+loops have a better profile in the template structure, which strengthens the
+assessment that the model is probably incorrect in the active site region.
+This problem is addressed in the <a href="https://salilab.org/modeller/tutorial/advanced.html">advanced modeling
+tutorial</a>.</p>
+
+</div></div>
+
+<div class="copyright">
+<p><a class="ucsflogo" href="https://www.ucsf.edu/"><img src="Tutorial_files/ucsf-logo.png" alt="UCSF Logo"></a>
+MODELLER (copyright © 1989-2025 Andrej Sali) is
+maintained by <a href="https://salilab.org/modeller/contact.html">Ben Webb</a>
+at the Departments of Biopharmaceutical Sciences and Pharmaceutical Chemistry,
+and California Institute for Quantitative Biomedical Research, Mission Bay
+Byers Hall, University of California San Francisco, San Francisco,
+CA 94143, USA.
+Any selling or distribution of the program or its parts, original or modified,
+is prohibited without a written permission from Andrej Sali.
+This file last modified: Wed Feb 10 10:36:26 PST 2021.</p>
+</div>
+
+
+</body></html>
