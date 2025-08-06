@@ -114,12 +114,12 @@ does the following (see file "<span class="filename">build_profile.py</span>"):<
 'Environ' object. Almost all MODELLER scripts require this step, as the new
 object (which we call here 'env', but you can call it anything you like) is
 needed to build most other useful objects.</li>
+         
 (初始化本次建模运行的“环境”，通过创建一个新的“Environ”对象。几乎所有MODELLER脚本都需要执行此步骤，因为该新对象（在此我们称其为“env”，但您可以随意命名）是构建其他大多数有用对象的必要条件。)
 
 <li>Creates a new 'SequenceDB' object, calling it 'sdb'. 'SequenceDB'
 objects are used to contain large databases of protein sequences.</li>
-(创建一个新的 ‘SequenceDB’ 对象，并将其命名为 ‘sdb’。'SequenceDB'
-对象用于存储大量蛋白质序列数据库。)
+(创建一个新的 ‘SequenceDB’ 对象，并将其命名为 ‘sdb’。'SequenceDB'对象用于存储大量蛋白质序列数据库。)
 
 <li>Reads a text format file containing non-redundant PDB sequences at 95%
 sequence identity into the <tt>sdb</tt> database. The sequences can be found
@@ -129,8 +129,12 @@ previously-created alignment, this file is in PIR format. Sequences which
 have fewer than 30 or more than 4000 residues are discarded, and non-standard
 residues are removed.</li>
 
+(将包含95%序列同一性非冗余PDB序列的文本文件（格式为PIR）读入sdb数据库。这些序列存储在文件"pdb_95.pir"中（可通过本页顶部链接下载）。与此前创建的比对文件类似，该文件采用PIR格式。系统会自动丢弃残基数少于30或多于4000的序列，并移除非标准残基)
+
 <li>Writes a binary machine-specific file containing all sequences read in the
 previous step.</li>
+
+(写入一个二进制机器特定文件，其中包含上一步骤中读取的所有序列)
 
 <li>Reads the binary format file back in. Note that if you plan to use the
 same database several times, you should use the previous two steps only the
@@ -138,19 +142,27 @@ first time, to produce the binary database. On subsequent runs, you can omit
 those two steps and use the binary file directly, since reading the binary
 file is a lot faster than reading the PIR file.</li>
 
+(读取二进制格式文件。请注意，如果你计划多次使用同一个数据库，你应该只在第一次使用时执行前两个步骤，以生成二进制数据库。在后续运行中，你可以省略这两个步骤，直接使用二进制文件，因为读取二进制文件比读取PIR文件快得多)
+
 <li>Creates a new 'Alignment' object, calling it 'aln', reads our query
 sequence "<em>TvLDH</em>" from the file
 "<span class="filename">TvLDH.ali</span>", and converts it to a profile
 'prf'. Profiles contain similar information to alignments, but are more
 compact and better for sequence database searching.</li>
 
+(创建一个新的“对齐”对象，命名为“aln”，从文件“TvLDH.ali”中读取查询序列“TvLDH”，并将其转换为一个“prf”文件。文件包含与对齐类似的信息，但更加紧凑，更适合序列数据库搜索)
+
 <li>Searches the sequence database 'sdb' for our query profile 'prf'.
 Matches from the sequence database are added to the profile.</li>
+
+(在序列数据库'sdb'中搜索我们的查询文件'prf'。从序列数据库中匹配到的序列将被添加到该文件中。)
 
 <li>Writes a profile of the query sequence and its homologs (see file 
 "<span class="filename">build_profile.prf</span>"). The equivalent information
 is also written out in standard alignment format.</li>
 </ol>
+
+(生成查询序列及其同源序列的特征描述（参见文件“build_profile.prf”）。等效信息也将以标准比对格式输出)
 
 <pre class="filecontent">from modeller import *
 
@@ -213,6 +225,8 @@ using Modeller 10.0's own interpreter, use <tt>mod10.0 build_profile.py</tt>.
 Note that <tt>mod10.0</tt> automatically creates a <tt>build_profile.log</tt>
 logfile.</i></p>
 
+(需注意，在某些系统中，Python解释器的名称可能是python2或python而非python3。有时可能需要指定Python解释器的完整路径，例如Linux/Mac系统中的/usr/bin/python或Windows系统中的C:\python27\python.exe。若系统中未安装Python，Modeller自带一个基础的Python 2.3解释器，可通过mod<版本号>调用。例如，使用Modeller 10.0自带的解释器运行脚本时，命令为mod10.0 build_profile.py。注意：mod10.0会自动生成日志文件build_profile.log)
+
 <p>(You can get a command line using xterm or GNOME Terminal in Linux,
 Terminal in Mac OS X, or the 'Modeller' link from your Start Menu in Windows.
 For more information on running Modeller, see
@@ -220,6 +234,8 @@ For more information on running Modeller, see
 on using Python, see the <a href="http://www.python.org/">Python web site</a>.
 Note that you can use other Python modules within your Modeller scripts, if
 Python is correctly installed on your system.)</p>
+
+(在Linux系统中可通过xterm或GNOME Terminal获取命令行界面，Mac OS X系统使用Terminal，Windows系统则通过开始菜单中的'Modeller'快捷方式启动。更多关于运行Modeller的详细信息，请参阅版本说明文档。关于Python的使用方法，请参考Python官方网站。需注意的是，如果系统中已正确安装Python，您可以在Modeller脚本中使用其他Python模块。)
 
 <p>The <strong>Profile.build()</strong> command has many options. In this
 example <strong>rr_file</strong> is set to use the BLOSUM62 similarity matrix
@@ -234,6 +250,8 @@ False). Finally, the parameter <strong>max_aln_evalue</strong> is set to 0.01,
 indicating that only sequences with e-values smaller than or equal to 0.01 will
 be included in the final profile.</p> 
 
+(Profile.build()命令提供多种参数选项。在本示例中，rr_file参数设置为使用BLOSUM62相似性矩阵（该矩阵文件"blosum62.sim.mat"包含在MODELLER安装包中）。相应地，matrix_offset和gap_penalties_1d参数也被设置为适用于BLOSUM62矩阵的对应值。本示例中我们将n_prof_iterations参数设为1，表示仅执行一次搜索迭代，因此无需检查profile偏差（check_profile设为False）。最后，max_aln_evalue参数设置为0.01，表示仅将e值小于等于0.01的序列纳入最终profile)
+
 <h3>2. Selecting a template</h3>
 <p>The output of the "<span class="filename">build_profile.py</span>" script is
 written to the "<span class="filename">build_profile.log</span>" file.
@@ -245,6 +263,8 @@ the "<span class="filename">build_profile.prf</span>" file. An extract (omitting
  of the output file can be seen next. The first 6 commented lines indicate the input parameters used in
 <span class="progs">MODELLER</span> to build the profile. Subsequent lines correspond to the detected
 similarities by <strong>Profile.build()</strong>.</p>
+
+("build_profile.py"脚本的输出结果将写入"build_profile.log"文件。MODELLER始终会生成日志文件。通过搜索"_E>"和"_W>"字符串可分别定位日志文件中的错误和警告信息。MODELLER同时会将profile以文本格式写入"build_profile.prf"文件。下文展示了该输出文件的节选内容（已省略比对序列部分）。前6行注释内容显示MODELLER构建profile时使用的输入参数，后续各行则对应Profile.build()检测到的相似性结果。)
 
 <pre class="filecontent"># Number of sequences:     30
 # Length of profile  :    335
@@ -308,7 +328,8 @@ our query sequence over the six similar structures, we will use the
 <strong>Alignment.compare_structures()</strong> command to assess the structural
 and sequence similarity between the possible templates (file
 "<span class="filename">compare.py</span>").
-
+         
+(Profile.build()输出结果中最重要的列为第二、第十、第十一和第十二列。第二列显示与目标序列比对的PDB序列代码，每个PDB代码代表一组序列相似性≥95%、残基差异＜30个或序列长度差异＜30%的PDB序列集合。第十一列报告TvLDH与PDB序列的百分比序列同一性（按第十列显示的比对长度标准化）。通常，若序列同一性＞25%（且比对长度≥100个残基）提示该序列可能作为模板。第十二列提供的比对e值能更好反映比对显著性。本示例中，6个PDB序列（1bdm:A、5mdh:A、1b8p:A、1civ:A、7mdh:A和1smk:A）与查询序列高度相似（e值=0），均为苹果酸脱氢酶。我们将通过Alignment.compare_structures()命令（"compare.py"文件）进一步评估这些候选模板的结构与序列相似性，以选择最优模板。)
 </p><pre class="filecontent">from modeller import *
 
 env = Environ()
@@ -335,6 +356,8 @@ read from each PDB file (by default, all chains are read from the file). As
 each structure is read in, we use the <strong>append_model</strong> method to
 add the structure to the alignment.</p>
 
+(在此案例中，我们首先创建一个（初始为空的）比对对象"aln"，随后通过Python的"for"循环指令MODELLER逐个读取PDB文件。（注意：要使此操作成功执行，必须将所有PDB文件置于与脚本相同的目录中，这些文件可从PDB官网或本页顶部链接的归档中下载。）我们使用model_segment参数指定仅读取每个PDB文件中的单条链（默认情况下会读取文件中的所有链）。每当读入一个结构时，便通过append_model方法将该结构添加至比对中。)
+
 <p>At the end of the loop, all of the structures are in the alignment, but they
 are not ideally aligned to each other (<strong>append_model</strong> creates
 a simple 1:1 alignment with no gaps). Therefore, we improve this alignment by
@@ -355,6 +378,8 @@ calculates a clustering tree from the input matrix of pairwise distances,
 which helps visualizing differences among the template candidates. Excerpts
 from the log file are shown below (file
 "<span class="filename">compare.log</span>").</p>
+
+(循环结束时，所有结构均已加入比对，但它们之间的对齐并非最优（append_model生成的简单1:1比对不含空位）。因此，我们使用malign进行多序列比对优化，再通过malign3d命令基于该多序列比对结果，对这六个三维结构进行迭代最小二乘叠加。compare_structures命令根据malign3d构建的比对来比较结构差异——它不生成新比对，而是计算原子位置的RMS和DRMS偏差、主链与侧链二面角差异、序列同一性百分比等指标。最后，id_table命令输出包含成对序列距离的文件，该文件可直接作为dendrogram命令（或PHYLIP软件包中的聚类程序）的输入。dendrogram根据成对距离矩阵计算聚类树，帮助可视化候选模板间的差异。部分日志文件内容如下所示（文件"compare.log"）。)
 
 <pre class="filecontent">Sequence identity comparison (ID_TABLE):
 
@@ -408,6 +433,8 @@ one with the lowest sequence identity (34%) to the query sequence. We finally
 pick <span class="pdb">1bdm:A</span> over <span class="pdb">1b8p:A</span> and
 <span class="pdb">7mdh:A</span> because of its better crystallographic R-factor
 (16.9%) and higher overall sequence identity to the query sequence (45%).
+         
+(上述比较表明，1civ:A 和 7mdh:A 在序列和结构上几乎完全一致。但 7mdh:A 的晶体分辨率更高（2.4Å vs 2.8Å），因此排除 1civ:A。第二组结构（5mdh:A、1bdm:A 和 1b8p:A）具有部分相似性，其中 5mdh:A 分辨率最差，仅剩 1bdm:A 和 1b8p:A 可供选择。1smk:A 是所有候选模板中差异最大的结构，但其与查询序列的序列同一性最低（34%）。最终我们选择 1bdm:A，因其晶体学R因子更优（16.9%），且与查询序列的整体同一性更高（45%）。)
 
 </p><h3>3. Aligning TvLDF with the template</h3>
 <p>A good way of aligning the sequence of TvLDH with the structure of
@@ -430,6 +457,8 @@ script aligns the TvLDH sequence in file
 <span class="pdb">1bdm:A</span> structure in the PDB file
 "<span class="filename">1bdm.pdb</span>" (file
 "<span class="filename">align2d.py</span>").</p>
+
+(使用MODELLER中的align2d()命令是将TvLDH序列与1bdm:A结构进行比对的有效方法。尽管align2d()基于动态规划算法，但它不同于标准的序列-序列比对方法，其在构建比对时会整合模板的结构信息。该功能通过可变空位罚分函数实现：倾向于将空位放置在溶剂暴露区/弯曲区域、二级结构片段之外，以及空间距离较近的两个位点之间。相较于标准序列比对技术，该方法能将比对错误减少约三分之一。当序列相似性较低且空位较多时，这一改进尤为重要。本案例中，由于模板与目标序列相似性极高，几乎任何参数合理的比对方法都能得到相同结果。以下MODELLER脚本将"TvLDH.ali"文件中的TvLDH序列与PDB文件"1bdm.pdb"中的1bdm:A结构进行比对（脚本文件"align2d.py"）)
 
 <pre class="filecontent">from modeller import *
 
@@ -461,6 +490,9 @@ while the PAP alignment format is easier to inspect visually. Due to the high
 target-template similarity, there are only a few gaps in the alignment. In the
 PAP format, all identical positions are marked with a "*" (file
 "<span class="filename">TvLDH-1bdmA.pap</span>").</p>
+
+(在此脚本中，我们再次创建了一个"Environ"对象作为后续命令的输入环境。初始化一个空比对对象"aln"后，新建蛋白质模型"mdl"并读入1bdm PDB结构文件的A链片段。通过append_model()命令将该模型的PDB序列转移至比对对象，并命名为"1bdmA"（align_codes参数）。接着使用append()命令将"TvLDH.seq"文件中的TvLDH序列加入比对。执行align2d()命令对两条序列进行比对，最终以两种格式输出比对结果：PIR格式（"TvLDH-1bdmA.ali"）和PAP格式（"TvLDH-1bdmA.pap"）。PIR格式将用于后续建模阶段，而PAP格式更便于人工检查。由于目标序列与模板高度相似，比对结果中仅存在少量空位。在PAP格式中，所有完全匹配的位点均用"*"标记（见文件"TvLDH-1bdmA.pap"）。)
+
 
 <pre class="filecontent"> _aln.pos         10        20        30        40        50        60
 1bdmA     MKAPVRVAVTGAAGQIGYSLLFRIAAGEMLGKDQPVILQLLEIPQAMKALEGVVMELEDCAFPLLAGL 
@@ -498,7 +530,7 @@ following script will generate five similar models of TvLDH based on the
 <span class="pdb">1bdm:A</span> template structure and the alignment in file
 "<span class="filename">TvLDH-1bdmA.ali</span>" (file
 "<span class="filename">model-single.py</span>").</p>
-
+(在完成目标-模板比对构建后，MODELLER会使用其AutoModel类全自动计算目标蛋白的三维模型。以下脚本将基于1bdm:A模板结构和"TvLDH-1bdmA.ali"文件中的比对信息，生成五个相似的TvLDH模型（脚本文件"model-single.py"）)
 <pre class="filecontent">from modeller import *
 from modeller.automodel import *
 #from modeller import soap_protein_od
@@ -530,11 +562,15 @@ number of models that are calculated (their indices will run from 1 to 5).
 The last line in the file calls the <strong>make</strong> method that
 actually calculates the models.</p>
 
+(首行代码导入AutoModel类并准备使用。接着我们创建一个名为'a'的AutoModel对象，并通过参数设置指导建模流程：alnfile指定包含PIR格式目标-模板比对的文件名；knowns定义比对文件（"TvLDH-1bdmA.ali"）中的已知模板结构；sequence指定比对文件里的目标序列名称；assess_methods请求一个或多个评估分数（下节将详细讨论）；starting_model和ending_model定义待计算模型的数量（编号从1到5）。文件最后一行调用make方法执行实际建模计算。)
+
 <p>The most important output file is
 "<span class="filename">model-single.log</span>", which reports warnings,
 errors and other useful information including the input restraints used for
 modeling that remain violated in the final model. The last few lines from this
 log file are shown below.</p>
+
+(最重要的输出文件是"model-single.log"，该文件记录了警告、错误及其他关键信息，包括建模过程中使用的输入约束条件以及在最终模型中仍存在的违例情况。下文展示了该日志文件的最后几行内容。)
 
 <pre class="filecontent">&gt;&gt; Summary of successfully produced models:
 Filename                          molpdf     DOPE score    GA341 score
@@ -554,6 +590,8 @@ model in PDB format. The models can be viewed by any program that reads the
 PDB format, such as Chimera. The log also shows the score(s) of each model,
 which are further discussed below. (Note that the actual numbers may be
 slightly different on your machine - this is nothing to worry about.)</p>
+
+(如您所见，日志文件汇总了所有构建的模型信息：每个模型均列出其PDB格式坐标文件的文件名（可通过Chimera等支持PDB格式的程序查看），同时显示各模型的评分分数（具体评分标准将在下文讨论）。（注意：您计算机上的实际数值可能略有差异，这属于正常现象。）)
 
 <h3>5. Model evaluation</h3>
 
@@ -594,6 +632,20 @@ model, one should check the log file from the modeling run for runtime errors
 with the DOPE potential. (Note that here we arbitrarily picked the second
 generated model - you may want to try other models.)</p>
 
+(若针对同一目标蛋白构建了多个模型，可通过以下方式选择"最佳"模型：
+    (1)选择MODELLER目标函数（molpdf）、DOPE或SOAP评估分数最低的模型
+    
+    (2)选择GA341评估分数最高的模型
+    
+    (3)（这些分数均记录在日志文件末尾。其中molpdf是默认计算的，也会写入每个PDB文件的REMARK字段；而DOPE、SOAP和GA341分数需通过assess_methods参数指定才会计算。如需计算SOAP分数，需先从SOAP官网下载SOAP-Protein势能文件，并移除"model-single.py"中SOAP相关代码行的注释符号#。）
+
+需注意：
+    (1)非绝对性指标：molpdf、DOPE和SOAP分数仅适用于同一比对生成的模型间比较
+    
+    (2)可迁移指标：GA341分数始终在0.0（最差）到1.0（类天然）之间，但其区分"好/坏"模型的能力不如DOPE或SOAP
+    
+    选定最终模型后，可通过更多方式验证质量（本页"模型评估"章节提供相关工具链接）。)
+    
 <pre class="filecontent">from modeller import *
 from modeller.scripts import complete_pdb
 
@@ -631,6 +683,8 @@ can use the <span class="filename">plot_profiles.py</span> script included
 in the tutorial zip file to plot profiles with the Python matplotlib
 package.</p>
 
+(在此脚本中，我们使用complete_pdb脚本读取PDB文件并准备能量计算（该功能可自动处理PDB文件中原子的非标准排序或不同原子子集的情况，例如包含氢原子的全原子文件与MODELLER仅使用的重原子文件之间的兼容性问题）。随后创建所有原子的选择集（因大多数MODELLER能量函数可针对模型原子的子集运算），通过assess_dope命令计算DOPE能量。我们还额外请求生成经过15个残基窗口平滑处理、并按各残基所受约束数归一化的能量分布曲线。该曲线将写入"TvLDH.profile"文件，可作为绘图程序的输入。例如，使用GNUPLOT命令plot "TvLDH.profile" using 1:42 with lines即可绘制曲线，或直接使用教程压缩包中的plot_profiles.py脚本通过Python的matplotlib包进行绘图)
+
 <p>The GA341 score, as well as external analysis with the
 <span class="progs">PROCHECK</span> program, confirms that
 <span class="filename">TvLDH.B99990001.pdb</span> is a
@@ -644,6 +698,8 @@ between the two. However, we can get an idea of the quality of our input
 alignment this way by comparing the rough shapes of the two profiles - if one
 is obviously shifted relative to the other, it is likely that the alignment
 is also shifted from the correct one.)</p>
+
+(GA341评分以及PROCHECK程序的外部分析均证实，TvLDH.B99990001.pdb是一个合理的模型。然而，绘制的DOPE能量分布图（下图）显示，在90-100号残基之间的长活性位点环区以及目标序列C端的长螺旋区域存在相对较高的能量值。（注：我们已将模型的能量曲线与模板的曲线叠加显示——图中空白处对应比对中的空位区域。需谨记这些评分并非绝对值，因此无法直接进行数值比较。但通过对比两条曲线的整体形状，可以评估输入比对的质量：若两条曲线明显偏移，则可能表明当前比对存在系统性错位。）)
 
 <p class="centerimg">
 <img class="centerimg" src="Tutorial_files/dope_profile.png" alt="DOPE score profile">
@@ -663,6 +719,8 @@ assessment that the model is probably incorrect in the active site region.
 This problem is addressed in the <a href="https://salilab.org/modeller/tutorial/advanced.html">advanced modeling
 tutorial</a>.</p>
 
+(该长环区（90-100）与220-250区域（活性位点的另一组成部分）存在相互作用。虽然220-250区域在模板结构中解析良好，且在目标模型中的构建可能正确，但由于其与90-100区存在不利的非键相互作用，DOPE同样报告该区域具有高"能量"。通常而言，DOPE提示的潜在误差未必是真实错误——尤其是当高能区位于活性位点或蛋白质相互作用界面时。但本案例中，模板结构的相同活性位点环区显示出更优的能量分布，这强化了"模型在活性位点区域可能存在错误"的判断。该问题的解决方案将在进阶建模教程中探讨。)
+
 </div></div>
 
 <div class="copyright">
@@ -677,6 +735,6 @@ Any selling or distribution of the program or its parts, original or modified,
 is prohibited without a written permission from Andrej Sali.
 This file last modified: Wed Feb 10 10:36:26 PST 2021.</p>
 </div>
-
+(MODELLER（版权 © 1989-2025 Andrej Sali）由Ben Webb维护，其所属机构为加州大学旧金山分校（University of California San Francisco）生物制药科学系、药理化学系及定量生物医学研究加州研究所（California Institute for Quantitative Biomedical Research），地址：Mission Bay Byers Hall，旧金山，加利福尼亚州94143，美国。未经安德烈·萨利书面许可，禁止出售或分发该程序或其任何部分（包括原始版本或修改版本）。本文件最后修改时间：2021年2月10日 10:36:26 PST)
 
 </body></html>
